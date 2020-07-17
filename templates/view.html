@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<!-- Mirrored from html.designstream.co.in/redial/style1/default/order-view.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 23 Apr 2020 07:11:49 GMT -->
+<head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Digiloan</title>
+        <link rel="icon" href="../static/images/favicon.ico" />
+
+        <!--Plugin CSS-->
+        <link href="../static/css/plugins.min.css" rel="stylesheet">
+
+        <!--main Css-->
+        <link href="../static/css/main.min.css" rel="stylesheet">
+    </head>
+    <body>
+        <!-- header-->
+        <div id="header-fix" class="header py-4 py-lg-2 fixed-top">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12 col-lg-3 col-xl-2 align-self-center" style=" margin-left: 8px;">
+                        <div class="site-logo" style="margin-top: 19px;">
+                            <a href="#"><h2 style="color: white;">DIGI LOAN</h2></a>
+                        </div>
+                        <div class="navbar-header">
+                            <button type="button" id="sidebarCollapse" class="navbar-btn bg-transparent float-right" style="margin-top: -40px; margin-right: -6px;">
+                                <i class="glyphicon glyphicon-align-left"></i>
+                                <span class="navbar-toggler-icon"></span>
+                                <span class="navbar-toggler-icon"></span>
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-6 col-xl-7 d-none d-lg-inline-block">
+                        <nav class="navbar navbar-expand-lg p-0">
+                            <ul class="navbar-nav notification ml-auto d-inline-flex"style="margin-right: -322px;">
+                                <li class="nav-item dropdown user-profile align-self-center">
+                                    <a  class="nav-link" data-toggle="dropdown" aria-expanded="false">
+                                        <span class="float-right pl-3 text-white">
+										<i class="fa fa-angle-down" style="margin-top: 17px;  margin-right: 42px; " ></i></span>
+                                        <div class="media">
+                                            <img src="../static/images/author.jpg" alt="" class="d-flex mr-3 img-fluid redial-rounded-circle-50" width="45" />
+                                            <div class="media-body align-self-center">
+
+                                                <big class="redial-primary-light font-weight-bold text-white"> Admin </big>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <ul class="dropdown-menu border-bottom-0 rounded-0 py-0">
+
+                                        <li><a class="dropdown-item py-2" href="#"><i class="ti-settings pr-2"></i> Change Password</a></li>
+                                        <!--<li><a class="dropdown-item py-2" href="#"><i class="fa fa-cog pr-2"></i> Setting</a></li>-->
+                                        <li><a class="dropdown-item py-2" href="login/index.html"><i class="fa fa-sign-out pr-2"></i> logout</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End header-->
+
+         <!-- Main-content Top bar-->
+        <div class="redial-relative mt-80">
+            <div class="container-fluid">
+              <!--   <div class="row">
+                    <div class="col-12 col-md-2 align-self-center my-3 my-lg-0">
+                        <h6 class="text-uppercase redial-font-weight-700 redial-light mb-0 pl-2">Dashboard</h6>
+                    </div>
+                    <div class="col-12 col-md-4 align-self-center">
+                        <div class="float-sm-left float-none mb-4 mb-sm-0">
+                            <ol class="breadcrumb mb-0 bg-transparent redial-light">
+                                <li class="breadcrumb-item"><a href="#" class="redial-light">Home</a></li>
+                                <li class="breadcrumb-item active">Dashboard </li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="clearfix d-none d-md-inline">
+
+                        </div>
+                    </div>
+                </div>-->
+            </div>
+        </div>
+       <!-- End Main-content Top bar-->
+
+        <!-- main-content-->
+        <div class="wrapper">
+
+            <nav id="sidebar" class="card redial-border-light px-2 mb-4">
+                <div class="sidebar-scrollarea">
+				 <ul class="metismenu list-unstyled mb-0" id="menu">
+
+                            <li class="menu-title">Navigation</li>
+
+
+                        <li><a href="index.html"><i class="fa fa-dashboard pr-1"></i> Dashboard</a></li>
+                        <li><a href="{{url_for('Index')}}"  ><i class="icofont icofont-database pr-1"></i> Wip Borrowers</a></li>
+                        <li>
+                            <a class="has-arrow" href="#" data-toggle="collapse" aria-expanded="false"><i class="icofont icofont-database pr-1"></i>Processing Requests </a>
+                             <ul class="collapse list-unstyled">
+                                <li><a href="{{url_for('Pending')}}">Pending Requests </a></li>
+                                <li><a href="{{url_for('Rejected')}}">Rejected Applications</a></li>
+
+                            </ul>
+                        </li>
+						<li><a href="{{url_for('Authorize')}}"><i class="icofont icofont-database pr-1"></i> Authorization Requests</a></li>
+						<li><a href="{{url_for('Manage')}}"><i class="icofont icofont-database pr-1"></i> Manage Borrowers</a></li>
+						 <li>
+                            <a class="has-arrow" href="#" data-toggle="collapse" aria-expanded="false"><i class="icofont icofont-database pr-1"></i>Member Loans Requests</a>
+                             <ul class="collapse list-unstyled">
+                                <li><a href="{{url_for('Request')}}">Pending Request</a></li>
+                                <li><a href="{{url_for('Lender')}}">Mapped Lender</a></li>
+                                <li><a href="{{url_for('transit')}}">Transit</a></li>
+								<li><a href="{{url_for('Bank')}}">Sent to Bank</a></li>
+								<li><a href="{{url_for('Rejected_loans')}}">Rejected loans</a></li>
+                            </ul>
+                        </li>
+						<li><a href="{{url_for('Loans')}}"><i class="icofont icofont-database pr-1"></i>Disbursed Loans </a></li>
+						<li><a href="{{url_for('Closed')}}"><i class="icofont icofont-database pr-1"></i> Closed Loans</a></li>
+						<li><a href="{{url_for('Todaysdues')}}"><i class="icofont icofont-database pr-1"></i>Todays Dues</a></li>
+						<li><a href="{{url_for('Defaulters')}}"><i class="icofont icofont-database pr-1"></i>Defaulters</a></li>
+						<li><a href="{{url_for('NPA')}}"><i class="icofont icofont-database pr-1"></i>NPA</a></li>
+						<li><a href="Mobile Num Search.html"><i class="icofont icofont-database pr-1"></i> Mobile Num Search</a></li>
+						<li><a href="{{url_for('arrears')}}"><i class="icofont icofont-database pr-1"></i> Arrears</a></li>
+						<li><a href="Manage Lenders.html"><i class="icofont icofont-database pr-1"></i> Manage Lenders</a></li>
+						<li><a href="Wip Lenders.html"><i class="icofont icofont-database pr-1"></i> Wip Lenders</a></li>
+						</ul>
+
+				</diV>
+            </nav>
+
+            <div id="content">
+			<br><br>
+                <div class="row mb-4">
+                    <div class="col-12 col-sm-12">
+                        <div class="row">
+						 <div class="col-12 col-xl-6 mb-4">
+                                <div class="card redial-border-light redial-shadow">
+                                    <div class="card-body">
+                                        <div class="media d-block d-sm-flex text-center text-sm-left">
+                                            <a href="#"><img src="../static/images/profile.jpg" alt="" class="img-fluid d-sm-flex mr-sm-3 mb-3 mb-sm-0 rounded-circle" width="120" /></a>
+                                            <div class="media-body">
+                                               <h3 class="header-tittle ">Profile</h3>
+                                        <dl class="row mb-0 redial-line-height-2_5">
+                                            <dt class="col-sm-5">Name:</dt>
+                                            <dd class="col-sm-7">mahesh</dd>
+
+                                            <dt class="col-sm-5">Mobile:</dt>
+                                            <dd class="col-sm-7">9959926084</dd>
+
+                                            <dt class="col-sm-5">Date of birth:</dt>
+                                            <dd class="col-sm-7">{{ emp[0]['reg']['dateOfBirth'] }}</dd>
+
+                                            <dt class="col-sm-5">Available Limit:</dt>
+                                            <dd class="col-sm-7">0.00</dd>
+
+                                            <dt class="col-sm-5">Email:</dt>
+                                            <dd class="col-sm-7">{{ emp[0]['reg']['email'] }}</dd>
+											 <dt class="col-sm-5">Action:</dt>
+                                            <dd class="col-sm-7"><span class="btn btn-info btn-xs">Edit</span></dd>
+                                        </dl>
+                                            </div>
+                                    </div>
+									</div>
+
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 mb-4">
+                                <div class="card redial-border-light redial-shadow">
+                                    <div class="card-body">
+                                        <h2 class="header"style="background-color: darkgray; margin-top: -19px; margin-left: -18px; margin-right: -17px; line-height: 2.75rem;">Personal Details </h2>
+                                        <dl class="row mb-0 redial-line-height-2_5">
+
+                                            <dt class="col-sm-5">ID:</dt>
+                                            <dd class="col-sm-7">{{ emp[0]['reg']['id'] }}</dd>
+
+                                            <dt class="col-sm-5">User ID:</dt>
+                                            <dd class="col-sm-7">{{ emp[0]['reg']['userId'] }}</dd>
+
+
+											<dt class="col-sm-5">Date Of Birth:</dt>
+                                            <dd class="col-sm-7">{{ emp[0]['reg']['dateOfBirth'] }}</dd>
+
+											<dt class="col-sm-5">Email:</dt>
+                                            <dd class="col-sm-7">{{ emp[0]['reg']['email'] }}</dd>
+
+                                            <dt class="col-sm-5">Adhar_number:</dt>
+                                            <dd class="col-sm-7">{{ emp[0]['reg']['adharNumber'] }}</dd>
+
+                                            <dt class="col-sm-5">Alternative_primaryNo 1:</dt>
+                                            <dd class="col-sm-7">{{ emp[0]['reg']['alternativePrimaryNumber1'] }}</dd>
+
+                                            <dt class="col-sm-5">Alternative_primaryNo 2:</dt>
+                                            <dd class="col-sm-7">{{ emp[0]['reg']['alternativePrimaryNumber2'] }}</dd>
+
+                                            <dt class="col-sm-5">Pan:</dt>
+                                            <dd class="col-sm-7">{{ emp[0]['reg']['pan'] }}</dd>
+
+                                            <dt class="col-sm-5">Action:</dt>
+                                            <dd class="col-sm-7"><a href="{{url_for('update')}}" class="btn btn-info btn-xs" data-toggle="modal" data-target="#modaledit{{ emp[0]['reg']['id'] }}">Edit</a></dd>
+                                        </dl>
+<div id="#modaledit{{ emp[0]['reg']['id'] }}" class="modal fade" role="dialog">
+   <div class="modal-dialog">
+
+
+      <div class="modal-content">
+
+
+         <div class="modal-header">
+
+
+            <h4 class="modal-title">View Information</h4>
+
+
+         </div>
+ <div class="modal-body">
+
+
+            <form action="{{url_for('update')}}" method="POST">
+
+                <div class="form-group">
+
+
+                  <label>Date of Birth:</label>
+                   <input type="hidden"  name="id" value="{{emp[0]['reg']['id']}}">
+
+                  <input type="date" class="form-control" name="{{ emp[0]['reg']['dateOfBirth'] }}" value="{{ emp[0]['reg']['dateOfBirth'] }}">
+
+
+               </div>
+
+                <div class="form-group">
+
+
+                  <label>Email:</label>
+
+
+                  <input type="text" class="form-control" name="emp[0]['reg']['email']" value="{{emp[0]['reg']['email']}}">
+
+
+               </div>
+
+               <div class="form-group">
+
+
+                  <label>Aadhar Number:</label>
+
+
+                  <input type="number" class="form-control" name="emp[0]['reg']['adharNumber']" value="{{emp[0]['reg']['adharNumber']}}">
+
+
+               </div>
+
+                <div class="form-group">
+
+
+                  <label>Email:</label>
+
+
+                  <input type="text" class="form-control" name="emp[0]['reg']['id']" value="{{emp[0]['reg']['id']}}">
+
+
+               </div>
+
+                <div class="form-group">
+
+
+                  <label>Mobile Number 1:</label>
+
+                  <input type="text" class="form-control" name="emp[0]['reg']['alternativePrimaryNumber1']" value="{{emp[0]['reg']['alternativePrimaryNumber1']}}">
+
+
+               </div>
+
+                 <div class="form-group">
+
+
+                  <label>Mobile Number 2:</label>
+
+                  <input type="text" class="form-control" name="emp[0]['reg']['alternativePrimaryNumber2']" value="{{emp[0]['reg']['alternativePrimaryNumber2']}}">
+
+
+               </div>
+
+                <div class="form-group">
+
+
+
+
+                  <label>PAN:</label>
+
+
+                  <input type="text" class="form-control" name="emp[0]['reg']['pan']" value="{{emp[0]['reg']['pan']}}">
+
+
+               </div>
+
+
+
+                  <button class="btn btn-primary" type="submit">Update</button>
+
+
+
+
+
+
+            </form>
+
+
+         </div>
+           <div class="modal-footer">
+
+
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+
+         </div>
+
+
+      </div>
+
+
+   </div>
+
+</div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 mb-4">
+                                <div class="card redial-border-light redial-shadow">
+                                    <div class="card-body">
+                                       <h2 class="header"style="background-color: darkgray; margin-top: -19px; margin-left: -18px; margin-right: -17px; line-height: 2.75rem;">Address Details </h2>
+                                         <dl class="row mb-0 redial-line-height-2_5">
+                                            <dt class="col-sm-5">Hno_flat_no :</dt>
+                                            <dd class="col-sm-7">{{ emp[1]['reg']['hnoFlatno'] }}</dd>
+
+                                            <dt class="col-sm-5">Building_Name:</dt>
+                                            <dd class="col-sm-7">{{ emp[1]['reg']['buildingName'] }}</dd>
+
+                                            <dt class="col-sm-5">Landmark:</dt>
+                                            <dd class="col-sm-7">{{ emp[1]['reg']['landmark'] }}</dd>
+
+                                            <dt class="col-sm-5">Pincode:</dt>
+                                            <dd class="col-sm-7">{{ emp[1]['reg']['pincode'] }}</dd>
+
+                                            <dt class="col-sm-5">City:</dt>
+                                            <dd class="col-sm-7">{{ emp[1]['reg']['city'] }}</dd>
+
+											<dt class="col-sm-5">State :</dt>
+                                            <dd class="col-sm-7">{{ emp[1]['reg']['state'] }}</dd>
+
+											<dt class="col-sm-5">same_as_above_address:</dt>
+                                            <dd class="col-sm-7">{{ emp[1]['reg']['sameAsAboveAddress'] }}</dd>
+
+											<dt class="col-sm-5">Current_Hno_FlatNo:</dt>
+										    <dd class="col-sm-7">{{ emp[1]['reg']['currentHnoFlatno'] }}</dd>
+
+											<dt class="col-sm-5">Current_BuildingName:</dt>
+                                            <dd class="col-sm-7">{{ emp[1]['reg']['currentBuildingName'] }}</dd>
+
+											<dt class="col-sm-5">Current_landmark :</dt>
+                                            <dd class="col-sm-7">{{ emp[1]['reg']['currentLandmark'] }}</dd>
+
+                                            <dt class="col-sm-5">Current_Post Code</dt>
+                                            <dd class="col-sm-7">{{ emp[1]['reg']['currentPincode'] }}</dd>
+
+											<dt class="col-sm-5">Current_City:</dt>
+                                            <dd class="col-sm-7">{{ emp[1]['reg']['currentCity'] }}</dd>
+
+                                            <dt class="col-sm-5">Current_State</dt>
+                                            <dd class="col-sm-7">{{ emp[1]['reg']['currentState'] }}</dd>
+
+                                            <dt class="col-sm-5">Action:</dt>
+                                            <dd class="col-sm-7"><span class="btn btn-info btn-xs">Edit</span></dd>
+                                        </dl>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 mb-4 mb-md-0">
+                                <div class="card redial-border-light redial-shadow">
+                                    <div class="card-body">
+                                     <h2 class="header"style="background-color: darkgray; margin-top: -19px; margin-left: -18px; margin-right: -17px; line-height: 2.75rem;">Employment Details</h2>
+                                          <dl class="row mb-0 redial-line-height-2_5">
+                                            <dt class="col-sm-5">Company_Name:</dt>
+                                            <dd class="col-sm-7">{{ emp[2]['reg']['companyName'] }}</dd>
+
+											<dt class="col-sm-5">JobRole_Description:</dt>
+                                            <dd class="col-sm-7">{{ emp[2]['reg']['jobRoleDescription'] }}</dd>
+
+                                            <dt class="col-sm-5">Department:</dt>
+                                            <dd class="col-sm-7">{{ emp[2]['reg']['department'] }}</dd>
+
+                                            <dt class="col-sm-5">ManagerNameNumber:</dt>
+                                            <dd class="col-sm-7">{{ emp[2]['reg']['managerNameNumber'] }}</dd>
+
+                                            <dt class="col-sm-5">Salary:</dt>
+                                            <dd class="col-sm-7">{{ emp[2]['reg']['salary'] }}</dd>
+
+                                            <dt class="col-sm-5">Office_Address:</dt>
+                                            <dd class="col-sm-7">{{ emp[2]['reg']['officeAddress'] }}</dd>
+
+                                            <dt class="col-sm-5">Work_Location:</dt>
+                                            <dd class="col-sm-7">{{ emp[2]['reg']['workLocation'] }}</dd>
+
+											<dt class="col-sm-5">Post Code:</dt>
+                                            <dd class="col-sm-7">{{ emp[2]['reg']['pinCode'] }}</dd>
+
+											<dt class="col-sm-5">Business_Name:</dt>
+                                            <dd class="col-sm-7">{{ emp[3]['reg']['businessName'] }}</dd>
+
+											<dt class="col-sm-5">Nature_Of_Business:</dt>
+                                            <dd class="col-sm-7">{{ emp[3]['reg']['natureOfBusiness'] }}</dd>
+
+											<dt class="col-sm-5">Since_From:</dt>
+                                            <dd class="col-sm-7">{{ emp[3]['reg']['sinceFrom'] }}</dd>
+
+                                            <dt class="col-sm-5">Business_Address:</dt>
+                                            <dd class="col-sm-7">{{ emp[3]['reg']['businessAddress'] }}</dd>
+
+                                         <dt class="col-sm-5">Action:</dt>
+                                            <dd class="col-sm-7"><span class="btn btn-info btn-xs">Edit</span></dd>
+                                        </dl>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 mb-4">
+                                <div class="card redial-border-light redial-shadow">
+                                    <div class="card-body">
+                                        <h2 class="header"style="background-color: darkgray; margin-top: -19px; margin-left: -18px; margin-right: -17px; line-height: 2.75rem;">Bank Details </h2>
+                                        <dl class="row mb-0 redial-line-height-2_5">
+                                            <dt class="col-sm-5">Bank_Name:</dt>
+                                            <dd class="col-sm-7">{{ emp[4]['reg']['bankNamex'] }}</dd>
+
+                                            <dt class="col-sm-5">Account_Holder_Name:</dt>
+                                            <dd class="col-sm-7">{{ emp[4]['reg']['accountHolderName'] }}</dd>
+
+											<dt class="col-sm-5">Account_Number:</dt>
+                                            <dd class="col-sm-7">{{ emp[4]['reg']['accountNumber'] }}</dd>
+
+											<dt class="col-sm-5">Account_Type:</dt>
+                                            <dd class="col-sm-7">{{ emp[4]['reg']['accountType'] }}</dd>
+
+                                            <dt class="col-sm-5">IFSC:</dt>
+                                            <dd class="col-sm-7">{{ emp[4]['reg']['ifsc'] }}</dd>
+
+                                            <dt class="col-sm-5">Action:</dt>
+                                            <dd class="col-sm-7"><span class="btn btn-info btn-xs">Edit</span></dd>
+                                        </dl>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End main-content-->
+
+
+        <!-- Top To Bottom-->
+ <a href="#" class="scrollup text-center redial-bg-primary redial-rounded-circle-50">
+            <h4 class="text-white mb-0"><i class="icofont icofont-long-arrow-up"></i></h4>
+        </a>
+        <!-- End Top To Bottom-->
+
+
+
+        <!-- jQuery -->
+        <script src="../static/js/plugins.min.js"></script>
+        <script src="../static/js/common.js"></script>
+    </body>
+
+<!-- Mirrored from html.designstream.co.in/redial/style1/default/order-view.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 23 Apr 2020 07:11:49 GMT -->
+</html>
