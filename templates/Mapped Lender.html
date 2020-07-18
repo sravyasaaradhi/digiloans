@@ -166,7 +166,7 @@
                                             {% for row in employees %}
                                             <tr>
                                                 <td>{{row.loan_id}}</td>
-                                                <td>{{row.lender_id}}</td>
+                                                <td>{{row.lastname}}</td>
                                                 <td>{{row.lendershare_amount}}</td>
                                                 <td>{{row.assignedDate}}</td>
                                                 <td>{{row.status}}</td>
@@ -176,11 +176,10 @@
                                                 <td>
 
 	<script>
-
 	var source = new EventSource("/progress");
 	source.onmessage = function(event) {
-		$('.progress-bar').css('width', event.data+'%').attr('aria-valuenow', event.data);
-		$('.progress-bar-label').text(event.data+'%');
+		$('.progress-bar').css('width', 30+'%').attr('aria-valuenow', 30);
+		$('.progress-bar-label').text(30+'%');
 
 		if(event.data == 100){
 			source.close()
@@ -193,7 +192,9 @@
 		</div>
 	</div>
                                                 </td>
-                                                <td><a href="/Move_to_Transit" class="btn btn-google" data-toggle="modal" data-target="movetotransit{{row.loan_id}}">Move to Transit</a></td>
+                                                <td>
+                                                    <a href="/Move_to_Transit" class="btn btn-google" data-toggle="modal" data-target="#movetotransit{{row.loan_id}}">Move to Transit</a>
+                                                </td>
 
                                             </tr>
                                             <div id="movetotransit{{row.loan_id}}" class="modal fade" role="dialog">
@@ -222,17 +223,6 @@
                    <input type="hidden"  name="id" value="{{row.loan_id}}">
 
                   <input type="number" class="form-control" name="loan_id" value="{{row.loan_id}}">
-
-
-               </div>
-
-                <div class="form-group">
-
-
-                  <label>Borrower Name:</label>
-
-
-                  <input type="text" class="form-control" name="browerName" value="{{row.browerName}}">
 
 
                </div>
@@ -304,7 +294,10 @@
    </div>
 
                                             {% endfor %}
+                                            </div>
                                          </table>
+                                    </div>
+                                </div>
                                     </div>
                                 </div>
                             </div>

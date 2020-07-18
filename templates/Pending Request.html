@@ -213,7 +213,7 @@
 
 
 
-<input type="radio" id="select" name="select" value="Select">
+<input type="button" id="select" name="select" value="Select">
 
             <form action="{{url_for('Move_to_Lender')}}" method="POST">
 
@@ -221,12 +221,9 @@
 
 
 <select name="lender_names[]" id="lender_names" MULTIPLE size="6">
-   <option value="12">Ganga mahesh</option>
-   <option value="13">test tedt</option>
-   <option value="14">Ashwin</option>
-   <option value="15">Praveen</option>
-   <option value="Lender5">Pramod</option>
-   <option value="Lender6">Ramesh</option>
+     {% for row in lender %}
+   <option value={{row.id}}>{{row.firstName}}</option>
+     {% endfor %}
 </select>
 <br />
                 <div class="form-group">

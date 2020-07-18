@@ -129,14 +129,30 @@ class MappedLender(db.Model):
     assignedDate = db.Column(db.String(60))
     status = db.Column(db.String(50))
     loanAmount = db.Column(db.Integer)
+    repaymentDate = db.Column(db.String)
 
 
-    def __init__(self,   loan_id, assignedDate,status,loanAmount):
+    def __init__(self,   loan_id, assignedDate,status,loanAmount,repaymentDate):
         self.loan_id = loan_id
         self.assignedDate = assignedDate
         self.status = status
         self.loanAmount = loanAmount
+        self.repaymentDate = repaymentDate
 
+class LenderLoanMapping(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    loan_id = db.Column(db.Integer)
+    lender_id = db.Column(db.Integer)
+    lender_share_amount = db.Column(db.Integer)
+    createdAt = db.Column(db.DATE)
+    updatedAt = db.Column(db.DateTime)
+
+    def __init__(self, loan_id,lender_id,lender_share_amount,createdAt,updatedAt):
+        self.loan_id = loan_id
+        self.lender_id = lender_id
+        self.lender_share_amount = lender_share_amount
+        self.createdAt = createdAt
+        self.updatedAt = updatedAt
 
 class RejectedLoans(db.Model):
     #id = db.Column(db.Integer)
@@ -284,7 +300,7 @@ class Transit(db.Model):
         self.loanAmount = loanAmount
         self.repaymentAmount= repaymentAmount
         self.requesteddate = requesteddate
-        self. repaymentDate =  repaymentDate
+        self.repaymentDate =  repaymentDate
 
 
 class Move(db.Model):
@@ -747,43 +763,28 @@ def Move_to_Lender():
 
         loan_id = request.form['loan_id']
         lender_id = request.form.getlist('lender_names[]')
-        print(lender_id)
-        lendershare_amount = ''
+
+
+        lendershare_amount = 0
         nowTime = datetime.now();
         assignedDate = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         status = "pending"
         loanAmount = request.form['loanAmount']
-        reqAmt = ''
-        created_at = datetime.now()
-        #repaymentDate= request.form['repaymentDate']
-        loanFulfilment = "success"
-        #print(loanFulfilment)
-        my_data = MappedLender(loan_id,assignedDate,status, loanAmount)
+        repaymentDate = request.form['repaymentDate']
 
-        for lender in lender_id:
-            my_list = []
-            arr2 = [loan_id,lender,'',nowTime.strftime('%Y-%m-%d %H:%M:%S'),nowTime.strftime('%Y-%m-%d %H:%M:%S')];
-            my_list.insert(loan_id,lender,'',nowTime.strftime('%Y-%m-%d %H:%M:%S'),nowTime.strftime('%Y-%m-%d %H:%M:%S'))
-
-        mycursor = db.cursor()
-        print(my_list)
-        rslt_id = "INSERT INTO lender_loan_mapping (loan_id, lender_id,lendershare_amount,created_at,updated_at) VALUES (%s, %s, %s, %s);"
-
-        mycursor.execute(rslt_id, my_list)
-
-        # RETURNING
-        # id
-        # ")
-
-
-
+        my_data = MappedLender(loan_id,assignedDate,status, loanAmount,repaymentDate)
         db.session.add(my_data)
+        # nowTime.strftime('%Y-%m-%d %H:%M:%S'
+        for lender in lender_id:
+            my_data1 = LenderLoanMapping(loan_id, lender, 0,nowTime,nowTime)
+            db.session.add(my_data1)
+
         db.session.commit()
         flash("Moved to Mapped Lender")
 
-        date = MappedLender.query.all()
+        # date = MappedLender.query.all()
 
-        return render_template("Mapped Lender.html", employees=date)
+        return redirect("/mapping")
 
 @app.route('/Move_to_Rej', methods=['POST'])
 def Move_to_Rej():
@@ -844,9 +845,9 @@ def Move_to_Transit():
         my_data = Transit(loan_id, loanAmount, repaymentAmount, repaymentDate)
         db.session.add(my_data)
         db.session.commit()
-        flash("Moved to Bank Loans")
+        flash("Moved to Transit ")
 
-        date = Transit.query.all()
+    date = Transit.query.all()
 
     return render_template("Transit.html", employees = date)
 
@@ -1160,9 +1161,7 @@ def Request():
     # #
     # json_data_lender = json.loads(s.text)
     json_data = json.loads(r.text)
-    #print(json_data_lender)
-    # exit();
-    #print("index")
+
     list = []
     for datalist in json_data['reg']:
         listobj = {}
@@ -1187,22 +1186,95 @@ def Request():
        # result = db.engine.execute(text('select * from pending_request where loan_id = :loanID'),
        #                            loanID=loan_id).first();
         #listobj['browerName'] = result[1]
+    url = "http://15.206.199.1:8080/LenderAppjune22/lender/getLenderDetailsBasedOnids"
+    joined_string = "1,2"
+    data = {'userids': joined_string}
+    r = requests.post(url, params={'userids': joined_string})
+    json_data = json.loads(r.text)
 
-    return render_template("Pending Request.html", employees=list)
+    return render_template("Pending Request.html", employees=list, lender = json_data['data'])
 
 
 @app.route('/mapping')
 def Lender():
-    #data = db.engine.execute("select * from mapped_lender")
-    data = MappedLender.query.all()
+    data = db.engine.execute("select * from mapped_lender")
 
+    list = []
+    for r in data:
+        print('loan_id',r.loan_id)
+        listobj = {}
+        listobj['loan_id'] = r.loan_id
+        datalender = db.engine.execute("select lender_id,lender_share_amount from lender_loan_mapping where loan_id=1")
+        lenderIds = [];
+        lenderShareAmount = [];
+        for x in datalender:
+             print('le',x.lender_id)
+             lenderIds.append(x.lender_id)
+             lenderShareAmount.append(x.lender_share_amount)
+
+        joined = [str(element) for element in lenderIds]
+        joined_string = ",".join(joined)
+        print('joined_string',joined_string)
+        # url = "http://15.206.199.1:8080/LenderAppjune22/lender/getLenderDetailsBasedOnids"
+        # data = {'userids': joined_string}
+        # r = requests.post(url, params={'userids': joined_string})
+        # json_data = json.loads(r.text)
+        # print('json_data',json_data)
+        lenderNames = [];
+        # for datalist in json_data['data']:
+        #     print(datalist)
+        #     lenderNames.append(datalist['firstName'])
+
+        lenderNames.append('ganga')
+        print('lenderNames',lenderNames)
+        joinedlenderNames = [str(element) for element in lenderNames]
+        print('joinedlenderNames',joinedlenderNames)
+        joined_string = ",".join(joinedlenderNames)
+
+        joinedlenderShareAmount = [str(element) for element in lenderShareAmount]
+        print('joinedlenderShareAmount', joinedlenderShareAmount)
+        joined_string_amount = ",".join(joinedlenderShareAmount)
+
+        print(joined_string);
+        print(joined_string_amount);
+        print('sum',sum(lenderShareAmount));
+        totalShare = sum(lenderShareAmount)
+        if(totalShare ==0):
+            fulfillment = 0
+        else:
+            fulfillment = (r.loanAmount/totalShare)*100
+
+        listobj['lastname'] = joined_string;
+        listobj['fulfillment'] = 30;
+        listobj['lendershare_amount'] = joined_string_amount;
+        listobj['assignedDate'] = r.assignedDate;
+        listobj['status'] = r.status;
+        listobj['loanAmount'] = r.loanAmount;
+        listobj['repaymentDate'] = r.repaymentDate;
+        list.append(listobj)
+
+
+
+
+    # list =[]
+    # for datalist in json_data['data']:
+    #     listobj ={}
+    #     listobj['lastname'] = datalist['lastname']
+    #     listobj['lender_share_amount'] = datalist['lender_share_amount']
+    #
+    #     list.append(listobj)
+
+    # data = MappedLender.query.all()
+    # url = "http://15.206.199.1:8080/LenderAppjune22/lender/getLenderDetailsBasedOnids"
+    # data = {'userids':1}
+    # r = requests.post(url, data)
+    # json_data = json.loads(r.text)
+    # print(json_data)
 
 
     # my_list = list()
-    # for r in data:
-    #     data2 = db.engine.execute("select * from lender_loan_mapping")
-    #     for r1 in data2:
-    #         my_list.append(r1.lender_id)
+
+
     # url = "http://15.206.199.1:8080/LenderAppjune22/lender/getLenderDetailsBasedOnids"
     # data = {'userids':1}
     # r = requests.post(url, data)
@@ -1215,11 +1287,11 @@ def Lender():
     #     listobj['lastname'] = datalist['lastname']
     #     list.append(listobj)
 
-    return render_template("Mapped Lender.html", employees=data)
+
             # api hit with list of ids
             # data with lender  names
             # common separates names
-            # r.lender =assign here common separates anmes
+            # r.lender =assign here common separates names
 
 
     # print(json.dumps([dict(r) for r in data]))
@@ -1230,14 +1302,15 @@ def Lender():
     #     # json_data = json.loads(r.text)
     #     #
 
-    return render_template("Mapped Lender.html", employees=data)
+    return render_template("Mapped Lender.html", employees=list)
 
 
 @app.route('/transit')
 def transit():
-    data = Transit.query.all()
+    date = Transit.query.all()
 
-    return render_template("Transit.html", employees=data)
+
+    return render_template("Transit.html", employees=date)
 
 
 @app.route('/Bank')

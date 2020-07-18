@@ -172,11 +172,11 @@
                                                     <td>{{row.requesteddate}}</td>
                                                     <td>{{row.repaymentDate}}</td>
                                                     <td>
-                                                        <a href="/Move_to_Rej" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#movetoreject{{row.loanId}}">Reject</a><br>
-                                                        <br><a href="/Export_to_Excel/export_file/" class="btn btn-success btn-xs" data-toggle="modal" data-target="#exporttoexcel{{row.loanId}}">Export To Excel</a>
+                                                        <a href="/Move_to_Rej" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#movetoreject{{row.loan_id}}">Reject</a><br>
+                                                        <br><a href="/Export_to_Excel/export_file/" class="btn btn-success btn-xs" data-toggle="modal" data-target="#exporttoexcel{{row.loan_id}}">Export To Excel</a>
                                                     </td>
                                                 </tr>
-      <div id="exporttoexcel{{row.loanId}}" class="modal fade" role="dialog">
+      <div id="exporttoexcel{{row.loan_id}}" class="modal fade" role="dialog">
    <div class="modal-dialog">
 
 
